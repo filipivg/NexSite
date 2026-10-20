@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criar conta — achou</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14161F; --paper:#F1F2F6; --surface:#FFFFFF;
+    --cobalt:#1F3A8F; --cobalt-dark:#152A6B;
+    --beacon:#F2A93B; --beacon-dark:#D98F1F;
+    --muted:#5B5F6B; --line:#DEE1E8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);min-height:100vh;}
+  a{color:inherit;text-decoration:none;}
+  h1,.serif{font-family:'Fraunces',serif;}
+  header{padding:24px 40px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Fraunces',serif;font-weight:600;font-size:22px;display:flex;align-items:center;gap:8px;}
+  .logo-mark{width:26px;height:26px;border-radius:50%;background:conic-gradient(from 220deg, var(--beacon), var(--cobalt) 70%);}
+
+  .step-track{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);}
+  .step-track .dot{width:7px;height:7px;border-radius:50%;background:var(--line);}
+  .step-track .dot.active{background:var(--cobalt);}
+
+  .wrap{max-width:760px;margin:32px auto 80px;padding:0 24px;}
+  .head{text-align:center;margin-bottom:44px;}
+  .head h1{font-size:30px;font-weight:500;margin-bottom:10px;}
+  .head p{font-size:15px;color:var(--muted);}
+
+  /* Step 1 — type */
+  .options{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .option-card{
+    background:var(--surface);border:1.5px solid var(--line);border-radius:16px;
+    padding:32px 28px;cursor:pointer;transition:border-color .15s,transform .15s;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .option-card:hover{border-color:var(--cobalt);transform:translateY(-2px);}
+  .option-card.selected{border-color:var(--cobalt);border-width:2px;background:#F5F7FC;}
+  .option-icon{
+    width:48px;height:48px;border-radius:12px;background:var(--paper);
+    display:flex;align-items:center;justify-content:center;font-size:22px;
+  }
+  .option-card h3{font-size:18px;font-weight:600;font-family:'Inter',sans-serif;}
+  .option-card p{font-size:14px;color:var(--muted);line-height:1.5;}
+  .option-radio{
+    width:20px;height:20px;border-radius:50%;border:2px solid var(--line);
+    margin-top:auto;align-self:flex-end;position:relative;
+  }
+  .option-card.selected .option-radio{border-color:var(--cobalt);}
+  .option-card.selected .option-radio::after{
+    content:"";position:absolute;inset:3px;border-radius:50%;background:var(--cobalt);
+  }
+
+  .continue-row{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:16px;}
+  .btn-primary{
+    padding:14px 40px;border-radius:8px;background:var(--cobalt);color:#fff;
+    font-weight:600;font-size:15px;border:none;cursor:pointer;transition:background .15s;
+    width:100%;max-width:380px;
+  }
+  .btn-primary:hover{background:var(--cobalt-dark);}
+  .footer-note{font-size:14px;color:var(--muted);}
+  .footer-note a{color:var(--cobalt);font-weight:600;}
+
+  /* Step 2 — form */
+  .form-box{max-width:420px;margin:0 auto;}
+  .selected-type{
+    display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);
+    border-radius:10px;padding:12px 16px;margin-bottom:28px;font-size:14px;
+  }
+  .selected-type b{font-weight:600;}
+  .selected-type button{
+    margin-left:auto;background:none;border:none;color:var(--cobalt);font-weight:600;
+    font-size:13px;cursor:pointer;font-family:inherit;
+  }
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;}
+  .field input{
+    width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:8px;
+    font-size:15px;font-family:inherit;outline:none;transition:border-color .15s;
+  }
+  .field input:focus{border-color:var(--cobalt);}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .back-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);font-weight:600;margin-bottom:24px;cursor:pointer;}
+  .back-link:hover{color:var(--ink);}
+  .terms{font-size:12.5px;color:var(--muted);margin:-4px 0 22px;line-height:1.5;}
+  .terms a{color:var(--cobalt);font-weight:600;}
+
+  [data-step]{display:none;}
+  [data-step].active{display:block;}
+
+  @media (max-width:640px){
+    .options{grid-template-columns:1fr;}
+    .two-col{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo"><span class="logo-mark"></span>achou</a>
+  <div class="step-track">
+    <span class="dot active" id="dot1"></span>
+    <span class="dot" id="dot2"></span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- STEP 1: tipo de perfil -->
+  <div data-step="1" class="active">
+    <div class="head">
+      <h1>Como você pretende usar a plataforma?</h1>
+      <p>Isso nos ajuda a personalizar sua experiência.</p>
+    </div>
+
+    <div class="options">
+      <div class="option-card selected" onclick="selectOption(this, 'Perfil de usuário')">
+        <div class="option-icon">🔍</div>
+        <h3>Quero encontrar empresas</h3>
+        <p>Pesquise, compare e descubra negócios que combinam com você.</p>
+        <div class="option-radio"></div>
+      </div>
+      <div class="option-card" onclick="selectOption(this, 'Perfil empresarial')">
+        <div class="option-icon">📈</div>
+        <h3>Quero divulgar minha empresa</h3>
+        <p>Crie um perfil, cadastre seu site e alcance novos clientes.</p>
+        <div class="option-radio"></div>
+      </div>
+    </div>
+
+    <div class="continue-row">
+      <button class="btn-primary" onclick="goToStep2()">Continuar</button>
+      <p class="footer-note">Já tem uma conta? <a href="login.html">Entrar</a></p>
+    </div>
+  </div>
+
+  <!-- STEP 2: dados da conta -->
+  <div data-step="2">
+    <div class="form-box">
+      <span class="back-link" onclick="goToStep1()">← Voltar</span>
+      <div class="head" style="text-align:left;margin-bottom:24px;">
+        <h1 style="font-size:26px;">Crie sua conta</h1>
+        <p>Só mais um passo para começar.</p>
+      </div>
+
+      <div class="selected-type">
+        <span>Cadastrando como <b id="typeLabel">Perfil de usuário</b></span>
+        <button onclick="goToStep1()">trocar</button>
+      </div>
+
+      <form onsubmit="return false;">
+        <div class="field">
+          <label for="nome" id="nomeLabel">Nome completo</label>
+          <input type="text" id="nome" placeholder="Seu nome" autocomplete="name">
+        </div>
+        <div class="field" id="cnpjField" style="display:none;">
+          <label for="cnpj">CNPJ</label>
+          <input type="text" id="cnpj" placeholder="00.000.000/0000-00" inputmode="numeric" maxlength="18">
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="voce@email.com" autocomplete="email">
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" placeholder="Mínimo 8 caracteres" autocomplete="new-password">
+          </div>
+          <div class="field">
+            <label for="confirmar">Confirmar senha</label>
+            <input type="password" id="confirmar" placeholder="Repita a senha" autocomplete="new-password">
+          </div>
+        </div>
+        <p class="terms">Ao criar sua conta, você concorda com os <a href="#">Termos de uso</a> e a <a href="#">Política de privacidade</a> do achou.</p>
+        <button type="submit" class="btn-primary">Criar conta</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function selectOption(card, label){
+    document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    window.__selectedType = label;
+  }
+  function goToStep2(){
+    document.querySelector('[data-step="1"]').classList.remove('active');
+    document.querySelector('[data-step="2"]').classList.add('active');
+    document.getElementById('dot1').classList.remove('active');
+    document.getElementById('dot2').classList.add('active');
+    const type = window.__selectedType || 'Perfil de usuário';
+    document.getElementById('typeLabel').textContent = type;
+
+    const isCompany = type === 'Perfil empresarial';
+    document.getElementById('cnpjField').style.display = isCompany ? 'block' : 'none';
+    document.getElementById('nomeLabel').textContent = isCompany ? 'Nome da empresa' : 'Nome completo';
+    document.getElementById('nome').placeholder = isCompany ? 'Nome da sua empresa' : 'Seu nome';
+
+    window.scrollTo(0,0);
+  }
+
+  // Máscara simples de CNPJ: 00.000.000/0000-00
+  document.getElementById('cnpj').addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 14);
+    v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+    v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    v = v.replace(/(\d{4})(\d)/, '$1-$2');
+    e.target.value = v;
+  });
+  function goToStep1(){
+    document.querySelector('[data-step="2"]').classList.remove('active');
+    document.querySelector('[data-step="1"]').classList.add('active');
+    document.getElementById('dot2').classList.remove('active');
+    document.getElementById('dot1').classList.add('active');
+  }
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
