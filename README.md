@@ -31,16 +31,6 @@ O NexSite conecta pessoas a negócios que elas ainda não conhecem e dá visibil
 
 HTML5 · CSS3 · JavaScript (vanilla) · Google Fonts (Fraunces e Inter)
 
-## Como executar
-
-Não há dependências. Clone o repositório e abra o `index.html` no navegador:
-
-```bash
-git clone https://github.com/filipivg/NexSite.git
-cd NexSite
-# abra o index.html no navegador
-```
-
 ## Status
 
 Protótipo em desenvolvimento. Os dados são fictícios e não há back-end: login, cadastro e favoritos são apenas simulações visuais.
