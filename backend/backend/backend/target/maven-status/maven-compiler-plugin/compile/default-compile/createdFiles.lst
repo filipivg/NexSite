@@ -1,0 +1,6 @@
+com\nexsite\backend\dto\CadastroDTO.class
+com\nexsite\backend\model\Usuario.class
+com\nexsite\backend\model\Empresa.class
+com\nexsite\backend\service\CadastroService.class
+com\nexsite\backend\BackendApplication.class
+com\nexsite\backend\controller\AuthController.class
