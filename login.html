@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar — achou</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14161F; --paper:#F1F2F6; --surface:#FFFFFF;
+    --cobalt:#1F3A8F; --cobalt-dark:#152A6B;
+    --beacon:#F2A93B; --beacon-dark:#D98F1F;
+    --muted:#5B5F6B; --line:#DEE1E8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--surface);}
+  a{color:inherit;text-decoration:none;}
+  h1,.serif{font-family:'Fraunces',serif;}
+  .screen{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+
+  /* Left brand panel */
+  .brand-panel{
+    background:var(--ink);color:#fff;padding:56px;display:flex;flex-direction:column;
+    justify-content:space-between;position:relative;overflow:hidden;
+  }
+  .logo{font-family:'Fraunces',serif;font-weight:600;font-size:22px;display:flex;align-items:center;gap:8px;position:relative;z-index:2;}
+  .logo-mark{width:26px;height:26px;border-radius:50%;background:conic-gradient(from 220deg, var(--beacon), var(--cobalt) 70%);}
+  .brand-quote{max-width:420px;position:relative;z-index:2;}
+  .brand-quote p{font-family:'Fraunces',serif;font-size:30px;font-weight:500;line-height:1.35;font-style:italic;}
+  .brand-quote span{display:block;margin-top:18px;font-size:14px;color:#9498A3;font-style:normal;}
+  .beacon-ring{
+    position:absolute;width:520px;height:520px;border-radius:50%;
+    border:1px dashed #33374A;top:60%;left:20%;transform:translate(-50%,-50%);
+  }
+  .beacon-ring.b2{width:340px;height:340px;border-color:#292C3B;}
+
+  /* Right form panel */
+  .form-panel{display:flex;align-items:center;justify-content:center;padding:40px;}
+  .form-box{width:100%;max-width:380px;}
+  .form-box h2{font-size:28px;font-weight:500;margin-bottom:8px;}
+  .form-box .sub{font-size:15px;color:var(--muted);margin-bottom:36px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;}
+  .field input{
+    width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:8px;
+    font-size:15px;font-family:inherit;outline:none;transition:border-color .15s;
+  }
+  .field input:focus{border-color:var(--cobalt);}
+  .row-between{display:flex;justify-content:space-between;align-items:center;margin:-6px 0 24px;}
+  .row-between a{font-size:13px;color:var(--cobalt);font-weight:600;}
+  .checkbox-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);}
+  .btn-primary{
+    width:100%;padding:14px;border-radius:8px;background:var(--cobalt);color:#fff;
+    font-weight:600;font-size:15px;border:none;cursor:pointer;transition:background .15s;
+  }
+  .btn-primary:hover{background:var(--cobalt-dark);}
+  .divider{display:flex;align-items:center;gap:12px;margin:28px 0;font-size:12px;color:var(--muted);}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line);}
+  .btn-outline{
+    width:100%;padding:12px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);
+    font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .footer-note{margin-top:28px;text-align:center;font-size:14px;color:var(--muted);}
+  .footer-note a{color:var(--cobalt);font-weight:600;}
+
+  @media (max-width:840px){
+    .screen{grid-template-columns:1fr;}
+    .brand-panel{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="screen">
+  <div class="brand-panel">
+    <a href="index.html" class="logo"><span class="logo-mark"></span>achou</a>
+    <div class="brand-quote">
+      <p>“Enquanto o Google ajuda você a achar o que já procura, o achou ajuda você a descobrir o que ainda não conhecia.”</p>
+      <span>Mais de 2.900 empresas já estão na plataforma</span>
+    </div>
+    <div class="beacon-ring"></div>
+    <div class="beacon-ring b2"></div>
+  </div>
+
+  <div class="form-panel">
+    <div class="form-box">
+      <h2>Entre na sua conta</h2>
+      <p class="sub">Acesse para salvar empresas, comparar opções e muito mais.</p>
+
+      <form>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="voce@email.com">
+        </div>
+        <div class="field">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="••••••••">
+        </div>
+        <div class="row-between">
+          <label class="checkbox-row"><input type="checkbox"> Lembrar de mim</label>
+          <a href="#">Esqueceu sua senha?</a>
+        </div>
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
+
+      <div class="divider">ou continue com</div>
+      <button class="btn-outline">Entrar com Google</button>
+
+      <p class="footer-note">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

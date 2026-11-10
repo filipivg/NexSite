@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filtrar — achou</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14161F; --paper:#F1F2F6; --surface:#FFFFFF;
+    --cobalt:#1F3A8F; --cobalt-dark:#152A6B;
+    --beacon:#F2A93B; --beacon-dark:#D98F1F;
+    --muted:#5B5F6B; --line:#DEE1E8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--surface);}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  a{color:inherit;text-decoration:none;}
+
+  .phone{max-width:420px;margin:0 auto;min-height:100vh;background:var(--surface);display:flex;flex-direction:column;}
+
+  .top-bar{
+    display:flex;align-items:center;justify-content:space-between;padding:18px 20px;
+    border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:10;
+  }
+  .top-bar .close{font-size:22px;color:var(--muted);width:30px;}
+  .top-bar h1{font-size:17px;font-weight:600;font-family:'Inter',sans-serif;}
+  .top-bar .reset{font-size:13.5px;font-weight:600;color:var(--cobalt);}
+
+  .content{flex:1;padding:20px;overflow-y:auto;}
+  .filter-group{margin-bottom:28px;}
+  .filter-group h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);margin-bottom:14px;}
+
+  .chip-select{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip-option{
+    padding:9px 16px;border-radius:20px;border:1.5px solid var(--line);font-size:14px;font-weight:500;
+    transition:all .12s;
+  }
+  .chip-option.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  .filter-group input[type=text]{
+    width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:9px;font-size:15px;
+    font-family:inherit;outline:none;
+  }
+  .filter-group input[type=text]:focus{border-color:var(--cobalt);}
+
+  .radio-list{display:flex;flex-direction:column;gap:2px;}
+  .radio-row{
+    display:flex;align-items:center;justify-content:space-between;padding:14px 2px;
+    border-bottom:1px solid var(--line);font-size:15px;
+  }
+  .radio-row:last-child{border-bottom:none;}
+  .radio-circle{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);position:relative;flex-shrink:0;}
+  .radio-row.selected .radio-circle{border-color:var(--cobalt);}
+  .radio-row.selected .radio-circle::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--cobalt);}
+
+  .price-row{display:flex;align-items:center;gap:10px;}
+  .price-row input{flex:1;}
+  .price-row span{color:var(--muted);font-size:14px;}
+
+  .bottom-bar{
+    padding:16px 20px 22px;border-top:1px solid var(--line);display:flex;gap:12px;
+    position:sticky;bottom:0;background:var(--surface);
+  }
+  .btn{flex:1;padding:15px;border-radius:9px;font-weight:600;font-size:15px;text-align:center;}
+  .btn-outline{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);}
+  .btn-primary{background:var(--cobalt);color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <div class="top-bar">
+    <button class="close" onclick="location.href='busca.html'">✕</button>
+    <h1>Filtrar</h1>
+    <button class="reset">Limpar</button>
+  </div>
+
+  <div class="content">
+
+    <div class="filter-group">
+      <h4>Categoria</h4>
+      <div class="chip-select">
+        <span class="chip-option active">Marketing</span>
+        <span class="chip-option">Tecnologia</span>
+        <span class="chip-option">Design</span>
+        <span class="chip-option">Educação</span>
+        <span class="chip-option">Alimentação</span>
+        <span class="chip-option">Saúde</span>
+        <span class="chip-option">Serviços</span>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Localização</h4>
+      <input type="text" value="Goiânia, GO">
+    </div>
+
+    <div class="filter-group">
+      <h4>Avaliação</h4>
+      <div class="radio-list">
+        <div class="radio-row selected"><span>4 estrelas ou mais</span><span class="radio-circle"></span></div>
+        <div class="radio-row"><span>3 estrelas ou mais</span><span class="radio-circle"></span></div>
+        <div class="radio-row"><span>Qualquer avaliação</span><span class="radio-circle"></span></div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Tipo</h4>
+      <div class="chip-select">
+        <span class="chip-option active">Empresa</span>
+        <span class="chip-option">Serviço</span>
+        <span class="chip-option">Loja</span>
+        <span class="chip-option">Site</span>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Faixa de preço</h4>
+      <div class="price-row">
+        <input type="text" placeholder="R$ mín.">
+        <span>—</span>
+        <input type="text" placeholder="R$ máx.">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Ordenar por</h4>
+      <div class="radio-list">
+        <div class="radio-row selected"><span>Relevância</span><span class="radio-circle"></span></div>
+        <div class="radio-row"><span>Mais avaliadas</span><span class="radio-circle"></span></div>
+        <div class="radio-row"><span>Mais recentes</span><span class="radio-circle"></span></div>
+        <div class="radio-row"><span>Mais acessadas</span><span class="radio-circle"></span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-bar">
+    <button class="btn btn-outline" onclick="location.href='busca.html'">Cancelar</button>
+    <a href="busca.html" class="btn btn-primary">Ver 1.248 empresas</a>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.chip-option').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('active'));
+  });
+  document.querySelectorAll('.radio-row').forEach(row => {
+    row.addEventListener('click', () => {
+      row.parentElement.querySelectorAll('.radio-row').forEach(r => r.classList.remove('selected'));
+      row.classList.add('selected');
+    });
+  });
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
