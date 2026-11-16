@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agência de marketing — NexSite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14161F; --paper:#F1F2F6; --surface:#FFFFFF;
+    --cobalt:#1F3A8F; --cobalt-dark:#152A6B;
+    --beacon:#F2A93B; --beacon-dark:#D98F1F;
+    --muted:#5B5F6B; --line:#DEE1E8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  h1,.serif{font-family:'Fraunces',serif;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+
+  /* Header */
+  header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;}
+  .header-inner{display:flex;align-items:center;gap:28px;padding:16px 40px;max-width:1320px;margin:0 auto;}
+  .logo{font-family:'Fraunces',serif;font-weight:600;font-size:21px;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+  .logo-mark{width:24px;height:24px;border-radius:50%;background:conic-gradient(from 220deg, var(--beacon), var(--cobalt) 70%);}
+  .search-bar{
+    flex:1;display:flex;border:1.5px solid var(--line);border-radius:9px;overflow:hidden;max-width:640px;
+  }
+  .search-bar input{flex:1;border:none;padding:12px 16px;font-size:14.5px;font-family:inherit;outline:none;}
+  .search-bar button{background:var(--ink);color:#fff;padding:0 22px;font-weight:600;font-size:14px;}
+  .header-actions{display:flex;gap:10px;margin-left:auto;flex-shrink:0;}
+  .btn{padding:9px 16px;border-radius:7px;font-size:14px;font-weight:600;}
+  .btn-ghost{color:var(--ink);opacity:.8;background:none;}
+  .btn-primary{background:var(--cobalt);color:#fff;}
+  /* Usuário logado no cabeçalho (montado pelo script.js) */
+  .user-box{display:flex;align-items:center;gap:12px;min-width:0;}
+  .user-name{font-size:14px;font-weight:600;color:var(--ink);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .user-box button.btn-ghost{background:none;}
+  @media (max-width:600px){ .user-name{max-width:110px;} }
+
+  /* Layout */
+  .layout{max-width:1320px;margin:0 auto;padding:32px 40px 80px;display:grid;grid-template-columns:260px 1fr;gap:36px;}
+
+  /* Sidebar filters */
+  .filters{position:sticky;top:80px;align-self:start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;}
+  .filters h3{font-size:16px;font-weight:600;margin-bottom:18px;}
+  .filter-group{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--line);}
+  .filter-group:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .filter-group h4{font-size:13px;font-weight:600;margin-bottom:12px;color:var(--muted);}
+  .check-row{display:flex;align-items:center;gap:9px;font-size:14px;margin-bottom:10px;cursor:pointer;}
+  .check-row input{width:16px;height:16px;accent-color:var(--cobalt);}
+  .filter-group select{
+    width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:7px;font-size:13.5px;font-family:inherit;
+    outline:none;background:var(--surface);color:var(--ink);margin-bottom:8px;
+  }
+  .filter-group select:last-child{margin-bottom:0;}
+  .filter-group select:focus{border-color:var(--cobalt);}
+  .filter-group select:disabled{background:var(--paper);color:var(--muted);cursor:not-allowed;}
+  .filter-error{font-size:12.5px;color:#B42318;margin-top:8px;}
+  .filtro-dica{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.45;}
+  .check-row .estrelas{font-size:14px;margin-right:4px;}
+  [hidden]{display:none !important;}
+  .filter-group input[type=text]{
+    width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:7px;font-size:13.5px;font-family:inherit;outline:none;
+  }
+  .filter-group input[type=text]:focus{border-color:var(--cobalt);}
+  .price-row{display:flex;gap:8px;align-items:center;}
+  .price-row input{width:100%;min-width:0;padding:9px 10px;border:1.5px solid var(--line);border-radius:7px;font-size:13px;font-family:inherit;outline:none;}
+  .price-row input:focus{border-color:var(--cobalt);}
+  .price-row span{color:var(--muted);font-size:13px;}
+  .clear-filters{font-size:13px;color:var(--cobalt);font-weight:600;background:none;margin-top:6px;}
+
+  /* Results */
+  .results-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+  .results-count{font-size:15px;}
+  .results-count b{font-weight:600;}
+  .sort-row{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted);}
+  .sort-row select{
+    border:1.5px solid var(--line);border-radius:7px;padding:8px 12px;font-family:inherit;font-size:13.5px;
+    color:var(--ink);background:var(--surface);outline:none;
+  }
+
+  .co-list{display:flex;flex-direction:column;gap:16px;}
+  .co-row{
+    display:flex;gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:22px;transition:box-shadow .15s;
+  }
+  .co-row:hover{box-shadow:0 14px 30px -18px rgba(20,22,31,0.22);}
+  .co-logo{
+    width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--cobalt),var(--cobalt-dark));flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:24px;
+  }
+  .co-body{flex:1;min-width:0;}
+  .co-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px;}
+  .co-name{font-size:17px;font-weight:600;}
+  .co-cat{font-size:13px;color:var(--muted);margin-top:2px;}
+  .sponsor-tag{
+    font-size:11px;font-weight:700;letter-spacing:.02em;padding:4px 8px;border-radius:5px;
+    background:#FEF0DB;color:var(--beacon-dark);white-space:nowrap;flex-shrink:0;
+  }
+  .co-desc{font-size:14px;color:var(--muted);margin-bottom:12px;max-width:640px;}
+  .co-meta{display:flex;align-items:center;gap:16px;font-size:13.5px;margin-bottom:12px;}
+  .co-rating{font-weight:600;color:var(--beacon-dark);}
+  .co-loc{color:var(--muted);}
+  .co-price{font-weight:600;}
+  .ordem-nota{background:#FEF6E7;border:1px solid #F5DFB4;color:#7A5410;border-radius:10px;padding:10px 14px;font-size:13.5px;margin-bottom:16px;line-height:1.5;}
+  /* Nota média (cartões) e estrelas */
+  .co-rating.sem{font-weight:500;color:var(--muted);}
+  .estrelas{position:relative;display:inline-block;font-size:16px;line-height:1;letter-spacing:1px;color:#CBD0DA;white-space:nowrap;vertical-align:middle;}
+  .estrelas::before{content:'★★★★★';}
+  .estrelas-cheias{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap;color:var(--beacon);}
+  .co-name a:hover{text-decoration:underline;}
+  .co-name,.co-desc,.co-cat{overflow-wrap:anywhere;}
+  .co-list.carregando{opacity:.5;transition:opacity .15s;}
+  .state-msg{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:44px 24px;text-align:center;color:var(--muted);}
+  .state-msg b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px;}
+  .state-msg a,.state-msg button{display:inline-block;margin-top:14px;color:var(--cobalt);font-weight:600;background:none;font-size:14px;}
+  .state-msg.erro{border-color:#F4C7C3;}
+  .co-tags{display:flex;gap:6px;flex-wrap:wrap;}
+  .chip{font-size:11.5px;padding:4px 9px;border-radius:5px;background:var(--paper);border:1px solid var(--line);color:var(--muted);}
+  .co-actions{display:flex;flex-direction:column;gap:10px;justify-content:center;flex-shrink:0;}
+  .co-btn{
+    padding:10px 20px;border-radius:8px;background:var(--ink);color:#fff;font-weight:600;font-size:13.5px;
+    white-space:nowrap;text-align:center;
+  }
+  .co-fav{
+    width:38px;height:38px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);
+    display:flex;align-items:center;justify-content:center;font-size:16px;align-self:center;
+  }
+
+  .pagination{display:flex;justify-content:center;gap:8px;margin-top:36px;}
+  .page-btn{
+    width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:var(--surface);
+    font-size:13.5px;font-weight:600;display:flex;align-items:center;justify-content:center;
+  }
+  .page-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .page-btn:disabled{opacity:.4;cursor:default;}
+  .page-gap{align-self:center;color:var(--muted);padding:0 2px;}
+
+  .mobile-filter-btn{display:none;}
+
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;padding:24px 20px 60px;}
+    .filters{display:none;}
+    .mobile-filter-btn{
+      display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;
+      border:1.5px solid var(--line);background:var(--surface);font-weight:600;font-size:14px;
+    }
+    .co-row{flex-direction:column;}
+    .co-actions{flex-direction:row;}
+    .header-inner .search-bar{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-mark"></span>NexSite</a>
+      <form class="search-bar" action="busca.html">
+        <input type="text" name="q" placeholder="Buscar empresas...">
+        <button type="submit">Buscar</button>
+      </form>
+    <div class="header-actions">
+      <a href="login.html" class="btn btn-ghost">Entrar</a>
+      <a href="cadastro.html" class="btn btn-primary">Criar conta</a>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <aside class="filters">
+    <h3>Filtros</h3>
+
+    <div class="filter-group">
+      <h4>Categoria</h4>
+      <div id="filtroCategorias"></div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Tipo</h4>
+      <div id="filtroTipos"></div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Avaliação</h4>
+      <div id="filtroNota"></div>
+      <p class="filtro-dica" id="dicaNota" hidden>Empresas ainda sem avaliações ficam de fora.</p>
+    </div>
+
+    <div class="filter-group">
+      <h4>Localização</h4>
+      <select id="filtroEstado"><option value="">Todos os estados</option></select>
+      <select id="filtroCidade" disabled><option value="">Todas as cidades</option></select>
+      <input type="text" id="filtroCidadeTexto" placeholder="Digite a cidade" maxlength="100" hidden>
+    </div>
+
+    <div class="filter-group">
+      <h4>Faixa de preço</h4>
+      <div class="price-row">
+        <input type="number" id="filtroPrecoMin" min="0" step="0.01" placeholder="R$ mín." inputmode="decimal">
+        <span>—</span>
+        <input type="number" id="filtroPrecoMax" min="0" step="0.01" placeholder="R$ máx." inputmode="decimal">
+      </div>
+      <p class="filter-error" id="erroPreco" hidden>O mínimo não pode ser maior que o máximo.</p>
+    </div>
+
+    <button class="clear-filters" id="limparFiltros" type="button">Limpar filtros</button>
+  </aside>
+
+  <main>
+    <div class="results-head">
+      <button class="mobile-filter-btn" id="btnFiltrarMobile" type="button">⚙ Filtrar</button>
+      <p class="results-count" id="contagemResultados">Carregando…</p>
+      <div class="sort-row">
+        Ordenar por
+        <select id="ordenar">
+          <option value="recentes">Mais recentes</option>
+          <option value="melhores">Mais bem avaliadas</option>
+          <option value="nome">Nome (A–Z)</option>
+          <option value="preco">Menor preço</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="ordem-nota" id="notaOrdem" hidden>Ordenadas pela nota média, levando em conta também a quantidade de avaliações. Empresas ainda sem avaliações aparecem por último.</p>
+
+    <div class="co-list" id="listaEmpresas"></div>
+
+    <div class="pagination" id="paginacao"></div>
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
